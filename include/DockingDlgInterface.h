@@ -24,6 +24,7 @@
 #include <shlwapi.h>
 #include "Common.h"
 #include "StaticDialog.h"
+#include "NppDarkMode.h"
 
 
 
@@ -93,9 +94,21 @@ protected :
 	generic_string _pluginName;
 	bool _isClosed = false;
 
-	virtual intptr_t CALLBACK run_dlgProc(UINT message, WPARAM , LPARAM lParam) {
+	virtual intptr_t CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 		switch (message)
 		{
+			case WM_ERASEBKGND:
+			{
+				if (!NppDarkMode::isEnabled())
+				{
+					break;
+				}
+
+				RECT rc = {};
+				getClientRect(rc);
+				::FillRect(reinterpret_cast<HDC>(wParam), &rc, NppDarkMode::getDarkerBackgroundBrush());
+				return TRUE;
+			}
 			case WM_NOTIFY: 
 			{
 				LPNMHDR	pnmh = reinterpret_cast<LPNMHDR>(lParam);
