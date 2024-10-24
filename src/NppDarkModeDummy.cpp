@@ -3,6 +3,16 @@
 
 extern NppData nppData;
 
+static constexpr COLORREF HEXRGB(DWORD rrggbb) {
+	// from 0xRRGGBB like natural #RRGGBB
+	// to the little-endian 0xBBGGRR
+	return
+		((rrggbb & 0xFF0000) >> 16) |
+		((rrggbb & 0x00FF00)) |
+		((rrggbb & 0x0000FF) << 16);
+}
+
+
 namespace NppDarkMode
 {
 	bool isEnabled()
@@ -27,5 +37,10 @@ namespace NppDarkMode
 
 	void setDarkTitleBar(HWND /*hwnd*/)
 	{
+	}
+
+	bool isWindows10()
+	{
+		return false;
 	}
 }

@@ -16,8 +16,17 @@
 
 // NOTE : Extremely cleaned out, if you need more go to: https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/MISC/Common/Common.cpp
 
+#include <algorithm>
+#include <stdexcept>
+#include <shlwapi.h>
+#include <uxtheme.h>
+#include <cassert>
+#include <codecvt>
+#include <locale>
+#include "StaticDialog.h"
 #include "Common.h"
-#include <tchar.h>
+
+using namespace std;
 
 COLORREF getCtrlBgColor(HWND hWnd)
 {
@@ -57,9 +66,9 @@ COLORREF getCtrlBgColor(HWND hWnd)
 	return crRet;
 }
 
-generic_string GetLastErrorAsString(DWORD errorCode)
+wstring GetLastErrorAsString(DWORD errorCode)
 {
-	generic_string errorMsg(_T(""));
+	wstring errorMsg(L"");
 	// Get the error message, if any.
 	// If both error codes (passed error n GetLastError) are 0, then return empty
 	if (errorCode == 0)
