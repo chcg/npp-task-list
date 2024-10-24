@@ -1,15 +1,14 @@
-#ifndef ABOUT_DLG_H
-#define ABOUT_DLG_H
+#pragma once
 
 #include "PluginInterface.h"
-#include "StaticDialog.h"
 #include "URLCtrl.h"
 #include "../resources/resource.h"
+#include "StaticDialog.h"
 
 class AboutDialog : public StaticDialog
 {
 public:
-	AboutDialog() : StaticDialog() {};
+	AboutDialog() = default;
 
 	void init( HINSTANCE hInst, NppData nppData )
 	{
@@ -19,13 +18,13 @@ public:
 
 	void doDialog();
 
-	virtual void destroy()
+	void destroy() override
 	{
 		_urlNppPlugin.destroy();
 	};
 
 protected:
-	virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/);
+	intptr_t CALLBACK run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/) override;
 
 private:
 	// Handles
@@ -34,5 +33,3 @@ private:
 	// Url control
 	URLCtrl	_urlNppPlugin;
 };
-
-#endif //ABOUT_DLG_H

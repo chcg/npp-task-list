@@ -1,15 +1,16 @@
 #include "AboutDlg.h"
-#include "PluginInterface.h"
 
 void AboutDialog::doDialog()
 {
 	if (!isCreated())
 		create(IDD_ABOUT_DIALOG);
 
-	goToCenter();
+	// Adjust the position of AboutBox
+	moveForDpiChange();
+	goToCenter(SWP_SHOWWINDOW | SWP_NOSIZE);
 }
 
-INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/)
+intptr_t CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/)
 {
 	switch (message) {
 	case WM_INITDIALOG:
@@ -19,6 +20,22 @@ INT_PTR CALLBACK AboutDialog::run_dlgProc(UINT message, WPARAM wParam, LPARAM /*
 
 			return TRUE;
 		}
+
+	case WM_CTLCOLORDLG:
+	case WM_CTLCOLORSTATIC:
+		{
+			return NppDarkMode::onCtlColorDarker(reinterpret_cast<HDC>(wParam));
+		}
+
+	case WM_PRINTCLIENT:
+		{
+			if (NppDarkMode::isEnabled())
+			{
+				return TRUE;
+			}
+			break;
+		}
+
 	case WM_COMMAND:
 		{
 			switch (wParam) {

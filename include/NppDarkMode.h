@@ -19,6 +19,7 @@
 #include <string>
 #include <windows.h>
 
+
 namespace NppDarkMode
 {
 	struct Colors

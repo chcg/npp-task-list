@@ -25,6 +25,11 @@ namespace NppDarkMode
 		return ::CreateSolidBrush(HEXRGB(0x202020));
 	}
 
+	COLORREF getTextColor()
+	{
+		return HEXRGB(0xE0E0E0);
+	}
+
 	COLORREF getDarkerTextColor()
 	{
 		return HEXRGB(0xC0C0C0);
@@ -35,6 +40,11 @@ namespace NppDarkMode
 		return HEXRGB(0xFFFF00);
 	}
 
+	COLORREF getDarkerBackgroundColor()
+	{
+		return HEXRGB(0x202020);
+	}
+
 	void setDarkTitleBar(HWND /*hwnd*/)
 	{
 	}
@@ -43,4 +53,17 @@ namespace NppDarkMode
 	{
 		return false;
 	}
+
+	LRESULT onCtlColorDarker(HDC hdc)
+	{
+		if (!NppDarkMode::isEnabled())
+		{
+			return FALSE;
+		}
+
+		::SetTextColor(hdc, NppDarkMode::getTextColor());
+		::SetBkColor(hdc, NppDarkMode::getDarkerBackgroundColor());
+		return reinterpret_cast<LRESULT>(NppDarkMode::getDarkerBackgroundBrush());
+	}
+
 }

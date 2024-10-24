@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-// NOTE : Extremely cleaned out, if you need more go to: https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/MISC/Common/Common.h
-
 #pragma once
 #include <vector>
 #include <string>
